@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html ng-app="PicturesManage">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+    <link href="stylesheets/waitCircle.css" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <script src="plugin/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="plugin/sweetalert/dist/sweetalert.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/javascripts/angular.min.js" type="text/javascript"></script>
+    <script src="/javascripts/angular-animate.min.js"></script>
+    <script src="/javascripts/angular-sanitize.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+    <script src="/javascripts/ng-file-upload.min.js"></script>
+
+    <script src="/javascripts/picturesManageScript.js" type="text/javascript"></script>
+</head>
+
+
+<body  ng-controller="PicturesManageController as picturesManage" dir="rtl">
+
+<div class="container">
+
+    <a href="panelManagement" ><button type="button" class="btn btn-default center-block">חזרה לממשק הניהול</button></a>
+
+
+    <h1 class="text-center">תמונות</h1>
+    <br><hr>
+    הוספת תמונה חדשה
+    <br>
+
+    <table class="table table-bordered" dir="rtl">
+        <tr>
+            <td>כותרת</td>
+            <td><input type="text" name="title" id="titleId" ng-model="pictureObj.title"></td>
+        </tr>
+        <tr>
+            <td>תיאור</td>
+            <td><input type="text" name="description" id="descId" ng-model="pictureObj.description"></td>
+        </tr>
+        <tr>
+            <td> קישור</td>
+            <td>
+                <button type="file" ngf-select="addPicture($file, $invalidFiles)" accept="image/*" ngf-max-size="10MB">Select File</button>
+            </td>
+        </tr>
+    </table>
+
+    <div id="myProgress" ng-show="showProgress">
+        <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+            <span class="progress" ng-show="f.progress >= 0">
+                <div style="width:{{f.progress}}" ng-bind="f.progress + '%'"></div>
+            </span>
+        </div>
+    </div>
+
+    <button type="button" class="btn-lg btn-success"  ng-click="sendPicture()"  id="cmdAdd" >הוספה</button>
+
+    <hr>
+תמונות קיימות
+
+    <!--wait circle-->
+    <div id="circle" class="sk-circle sk-circleSHOW">
+        <div class="sk-circle1 sk-child"></div>
+        <div class="sk-circle2 sk-child"></div>
+        <div class="sk-circle3 sk-child"></div>
+        <div class="sk-circle4 sk-child"></div>
+        <div class="sk-circle5 sk-child"></div>
+        <div class="sk-circle6 sk-child"></div>
+        <div class="sk-circle7 sk-child"></div>
+        <div class="sk-circle8 sk-child"></div>
+        <div class="sk-circle9 sk-child"></div>
+        <div class="sk-circle10 sk-child"></div>
+        <div class="sk-circle11 sk-child"></div>
+        <div class="sk-circle12 sk-child"></div>
+    </div>
+    <br>
+    <table id="picturesTable" class="table table-bordered" dir="rtl">
+        <thead>
+        <tr><th>כותרת</th><th>תיאור</th> <th>עדכון</th> <th>מחיקה</th></tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pic in pictureList">
+            <td>{{pic.img.title}}</td> <td>{{pic.img.desc}}</td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div  id="updNews" ng-show="picturesUpObj.show" >
+
+        <br><br>           עדכון
+        <table class="table" dir="rtl">
+
+
+            <tr>
+
+                <td> כותרת</td>
+                <td><input type="text" id="titleId" ng-model="picturesUpObj.img.title">  </td>
+            </tr>
+            <tr>
+                <td>תיאור</td>
+                <td><input type="text" name="description" id="descId" ng-model="picturesUpObj.img.description"></td>
+            </tr>
+        </table>
+
+        <button type="button" class="btn-lg btn-success" ng-click="updatePicture()" id="cmdUpd" >        עדכן</button>
+    </div>
+</div>
+</body>
+</html>
+
+

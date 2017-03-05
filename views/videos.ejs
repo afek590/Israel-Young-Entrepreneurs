@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html ng-app="Video">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+    <link href="stylesheets/waitCircle.css" rel="stylesheet">
+    <link href="/stylesheets/video.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/javascripts/angular.min.js" type="text/javascript"></script>
+    <script src="/javascripts/angular-animate.min.js"></script>
+    <script src="/javascripts/angular-sanitize.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+
+    <script src="/javascripts/videosScript.js" type="text/javascript"></script>
+
+
+</head>
+<body  ng-controller="VideoController as controller" dir="rtl">
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Israel Young Entrepreneurs</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <div class="g-signin2" data-onsuccess="onSignIn"> </div>
+                </li>
+                <li ng-show="access">
+                    <a href="#" onclick="signOut()">יציאה</a>
+                </li>
+                <li ng-show="access">
+                    <a href="panelManagement">ממשק הניהול</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">צור קשר</a>
+                </li>
+                <li>
+                    <a href="forum">פורום</a>
+                </li>
+                <li>
+                    <a href="videos">וידאו</a>
+                </li>
+                <li>
+                    <a href="pictures">תמונות</a>
+                </li>
+                <li>
+                    <a href="content">דפי תוכן</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+            <div class="videogular-container">
+                <videogular vg-player-ready="controller.onPlayerReady($API)" vg-complete="controller.onCompleteVideo()" vg-theme="controller.config.theme.url">
+                    <vg-media vg-src="controller.config.sources"
+                              vg-tracks="controller.config.tracks">
+                    </vg-media>
+
+                    <vg-controls dir="ltr">
+                        <vg-play-pause-button></vg-play-pause-button>
+                        <vg-time-display>{{ currentTime | date:'mm:ss':'+0000' }}</vg-time-display>
+                        <vg-scrub-bar>
+                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                        </vg-scrub-bar>
+                        <vg-time-display>{{ timeLeft | date:'mm:ss':'+0000' }}</vg-time-display>
+                        <vg-volume>
+                            <vg-mute-button></vg-mute-button>
+                            <vg-volume-bar></vg-volume-bar>
+                        </vg-volume>
+                        <vg-fullscreen-button></vg-fullscreen-button>
+                    </vg-controls>
+
+                    <vg-overlay-play></vg-overlay-play>
+                    <vg-buffering></vg-buffering>
+                    <vg-poster vg-url='controller.config.plugins.poster'></vg-poster>
+                </videogular>
+            </div>
+            <div class="playlist">
+                <ul>
+                    <li><a ng-click="controller.setVideo(0)">Default Video</a></li>
+                    <li ng-repeat="video in controller.videos"><a ng-click="controller.setVideo($index+1)">{{ videoList[$index].vid.name }}</a></li>
+                </ul>
+            </div>
+
+<!--wait circle-->
+<div id="circle" class="sk-circle sk-circleSHOW">
+    <div class="sk-circle1 sk-child"></div>
+    <div class="sk-circle2 sk-child"></div>
+    <div class="sk-circle3 sk-child"></div>
+    <div class="sk-circle4 sk-child"></div>
+    <div class="sk-circle5 sk-child"></div>
+    <div class="sk-circle6 sk-child"></div>
+    <div class="sk-circle7 sk-child"></div>
+    <div class="sk-circle8 sk-child"></div>
+    <div class="sk-circle9 sk-child"></div>
+    <div class="sk-circle10 sk-child"></div>
+    <div class="sk-circle11 sk-child"></div>
+    <div class="sk-circle12 sk-child"></div>
+</div>
+
+
+
+
+    <script src="http://static.videogular.com/scripts/videogular/latest/videogular.js"></script>
+    <script src="http://static.videogular.com/scripts/controls/latest/vg-controls.js"></script>
+    <script src="http://static.videogular.com/scripts/overlay-play/latest/vg-overlay-play.js"></script>
+    <script src="http://static.videogular.com/scripts/poster/latest/vg-poster.js"></script>
+    <script src="http://static.videogular.com/scripts/buffering/latest/vg-buffering.js"></script>
+
+<!-- jQuery -->
+<script src="javascripts/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="javascripts/bootstrap.min.js"></script>
+
+</body>
+</html>

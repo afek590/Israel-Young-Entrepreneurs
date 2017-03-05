@@ -1,11 +1,211 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html dir="rtl" lang="he" ng-app="Index">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/javascripts/angular.min.js" type="text/javascript"></script>
+    <script src="/javascripts/angular-animate.min.js"></script>
+    <script src="/javascripts/angular-sanitize.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+
+    <script src="/javascripts/index.js" type="text/javascript"></script>
+
+    <!-- Start google scripts -->
+
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="1059144044451-tae81h5r7bje7cuptqnhu96dmllc125p.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- end google scripts -->
+
+</head>
+
+<body ng-controller="IndexController as index">
+
+    <!-- Start google scripts -->
+
+    <script>
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            /*console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+             console.log('Full Name: ' + profile.getName());
+             console.log('Given Name: ' + profile.getGivenName());
+             console.log('Family Name: ' + profile.getFamilyName());
+             console.log("Image URL: " + profile.getImageUrl());
+             console.log("Email: " + profile.getEmail());*/
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            //console.log("ID Token: " + id_token);
+            if((MANAGERS.indexOf(profile.getEmail()) > -1))
+            {
+                console.log('LOGGING IN');
+                LOGIN = true;
+            }
+            else
+                signOut();
+        };
+    </script>
+
+    <script>
+        function signOut() {
+            LOGIN = false;
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+
+    <!-- end google scripts -->
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Israel Young Entrepreneurs</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <div class="g-signin2" data-onsuccess="onSignIn"> </div>
+                    </li>
+                    <li ng-show="access">
+                        <a href="#" onclick="signOut()">יציאה</a>
+                    </li>
+                    <li ng-show="access">
+                        <a href="panelManagement">ממשק הניהול</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">צור קשר</a>
+                    </li>
+                    <li>
+                        <a href="forum">פורום</a>
+                    </li>
+                    <li>
+                        <a href="videos">וידאו</a>
+                    </li>
+                    <li>
+                        <a href="pictures">תמונות</a>
+                    </li>
+                    <li>
+                        <a href="content">דפי תוכן</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header text-right">דף הבית
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-6 portfolio-item">
+                <a href="pictures">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3 class="text-right">
+                    <a href="pictures">תמונות</a>
+                </h3>
+            </div>
+            <div class="col-md-6 portfolio-item">
+                <a href="content">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3 class="text-right">
+                    <a href="content">דפי תוכן</a>
+                </h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-6 portfolio-item">
+                <a href="forum">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3 class="text-right">
+                    <a href="forum">פורום</a>
+                </h3>
+            </div>
+            <div class="col-md-6 portfolio-item">
+                <a href="videos">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3 class="text-right">
+                    <a href="videos">וידאו</a>
+                </h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Afek Hazan 2016</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="javascripts/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="javascripts/bootstrap.min.js"></script>
+
+</body>
+
 </html>

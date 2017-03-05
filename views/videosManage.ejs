@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="VideosManage">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+    <link href="stylesheets/waitCircle.css" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <script src="plugin/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="plugin/sweetalert/dist/sweetalert.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/javascripts/angular.min.js" type="text/javascript"></script>
+    <script src="/javascripts/angular-animate.min.js"></script>
+    <script src="/javascripts/angular-sanitize.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+    <script src="/javascripts/ng-file-upload.min.js"></script>
+
+    <script src="/javascripts/videosManageScript.js" type="text/javascript"></script>
+</head>
+<body ng-controller="VideosManageController as videosManage" dir="rtl">
+
+
+<div class="container">
+
+    <a href="panelManagement" ><button type="button" class="btn btn-default center-block">חזרה לממשק הניהול</button></a>
+
+        <h1 class="text-center">וידאו</h1>
+    <br>
+    <hr>
+    הוספת וידאו חדש
+    <br>
+
+
+    <table class="table table-bordered" dir="rtl">
+        <tr>
+            <td>שם</td>
+            <td><input type="text" id="txtName" ng-model="videoObj.name">  </td>
+        </tr>
+        <tr>
+            <td> קישור</td>
+            <td>
+                <button type="file" ngf-select="addVideo($file, $invalidFiles)" accept="video/*" ngf-max-size="50MB">Select File</button>
+            </td>
+        </tr>
+    </table>
+
+
+    <div ng-show="showProgress">
+        <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+            <span class="progress" ng-show="f.progress >= 0">
+                <div style="width:{{f.progress}}%"
+                     ng-bind="f.progress + '%'"></div>
+            </span>
+        </div>
+    </div>
+
+    <button type="button" class="btn-lg btn-success"  ng-click="sendVideo()"  id="cmdAdd" >הוספה</button>
+
+    <br><br>
+
+<hr>
+סרטונים קיימים
+    <!--wait circle-->
+    <div id="circle" class="sk-circle sk-circleSHOW">
+        <div class="sk-circle1 sk-child"></div>
+        <div class="sk-circle2 sk-child"></div>
+        <div class="sk-circle3 sk-child"></div>
+        <div class="sk-circle4 sk-child"></div>
+        <div class="sk-circle5 sk-child"></div>
+        <div class="sk-circle6 sk-child"></div>
+        <div class="sk-circle7 sk-child"></div>
+        <div class="sk-circle8 sk-child"></div>
+        <div class="sk-circle9 sk-child"></div>
+        <div class="sk-circle10 sk-child"></div>
+        <div class="sk-circle11 sk-child"></div>
+        <div class="sk-circle12 sk-child"></div>
+    </div>
+
+<br>
+    <table class="table table-bordered" dir="rtl">
+        <tr><th> שם</th> <th>עדכון</th> <th>מחיקה</th></tr>
+        <tr ng-repeat="video in videoList">
+               <td>{{video.vid.name}} <td>    <a href="#updCVideo"><button type="button" class="btn-xs btn-info" ng-click="showUpdateVideo(video)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delVideo" ng-click="delVideo(video)">מחק</button> </td>
+        </tr>
+    </table>
+
+
+    <div  id="updVideo"ng-show="videoUpdateObj.show">
+
+        <br><br>           עדכון
+        <table class="table">
+            <tr>
+                <td>שם</td>
+                <td><input type="text" id="titleId" ng-model="videoUpdateObj.name">  </td>
+            </tr>
+        </table>
+
+        <button type="button" class="btn-lg btn-success" ng-click="updateVideo()" id="cmdUpd" >        עדכן</button>
+    </div>
+
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html ng-app="ContentManage">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/javascripts/angular.min.js" type="text/javascript"></script>
+    <script src="/javascripts/angular-animate.min.js"></script>
+    <script src="/javascripts/angular-sanitize.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+
+    <script src="/javascripts/contentManageScript.js" type="text/javascript"></script>
+</head>
+
+
+<body ng-controller="ContentManageController as contentManage" dir="rtl">
+
+
+<div class="container">
+    <a href="panelManagement"><button type="button" class="btn btn-default center-block">חזרה לממשק הניהול</button></a>
+    <br>
+    <h1 class="text-center">דפי תוכן</h1>
+    <br>
+
+    <hr>
+    הוספת דף תוכן חדש
+    <br>
+
+    <table class="table table-bordered" dir="rtl">
+        <tr>
+            <td>כותרת</td>
+            <td><input type="text" name="title" id="titleId" ng-model="contentObj.title"> </td>
+        </tr>
+        <tr>
+            <td>עדיפות</td>
+            <td><input type="number" min="1" max="3" name="priority" id="priorityId" ng-model="contentObj.priority"> </td>
+        </tr>
+        <tr>
+            <td>תוכן</td>
+            <td><textarea type="text" id="txtDetails" ng-model="contentObj.description"></textarea> </td>
+        </tr>
+    </table>
+
+    <button type="button" class="btn-lg btn-success" id="acc" ng-click="addContent()" >הוספה</button>
+
+    <br><br>
+
+<hr>
+
+    דפי תוכן קיימים<br>
+
+
+    <table class="table table-bordered" dir="rtl">
+        <tr><th>כותרת</th><th>עדיפות</th> <th>תוכן</th><th>עדכון</th> <th>מחיקה</th></tr>
+        <tr ng-repeat="content in contentList" ng-class="{'success': content.priority == 1 , 'warning': content.priority == 2 , 'danger': content.priority == 3 }">
+            <td>{{content.title}}</td> <td>{{content.priority}}</td><td>{{content.description}}</td>  <td>    <a href="#upContent"><button type="button" class="btn-xs btn-info" ng-click="showUpdateContent(content)">עדכן</button></a></td><td><button type="button" class="btn-xs btn-danger" id="delCourse" ng-click="delObj(content)">מחק</button></td>
+        </tr>
+    </table>
+
+
+    <div  id="upContent"ng-show="updObj.show">
+        <br><br>           עדכון
+
+        <table class="table" dir="rtl">
+        <tr>
+            <td>כותרת</td>
+            <td><input type="text" name="title" id="titleId" ng-model="updObj.title"> </td>
+        </tr>
+        <tr>
+
+            <td>עדיפות</td>
+
+            <td><input type="number" min="1" max="3" name="priority" id="priorityId" ng-model="updObj.priority"> </td>
+        </tr>
+        <tr>
+            <td>תוכן</td>
+            <td><textarea type="text" id="txtDetails" ng-model="updObj.description"></textarea> </td>
+        </tr>
+        </table>
+        <button type="button" class="btn-lg btn-success" ng-click="updateContent()" id="cmdUpd" >עדכן</button>
+    </div>
+</div>
+</body>
+</html>
+
+
