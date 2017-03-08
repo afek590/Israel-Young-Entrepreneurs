@@ -90,12 +90,12 @@ app.controller('VideoController', ['$scope', '$http', '$sce', '$timeout', functi
             var videoObject = {};
             var sources = [];
             var video = {};
-            var base64 = $scope.videoList[i].vid.data;
+            var base64 = $scope.videoList[i].data;
             var binary = $scope.base64ToArrayBuffer(atob(base64));
-            var blob = new Blob([binary], {type: $scope.videoList[i].vid.contentType});
+            var blob = new Blob([binary], {type: $scope.videoList[i].contentType});
             var url = URL.createObjectURL(blob);
             video.src = $sce.trustAsResourceUrl(url);
-            video.type = $scope.videoList[i].vid.contentType;
+            video.type = $scope.videoList[i].contentType;
             sources.push(video);
             videoObject.sources = sources;
             controller.videos.push(videoObject);

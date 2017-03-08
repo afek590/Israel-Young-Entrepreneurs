@@ -77,12 +77,17 @@ var contentSchema = new Schema({
 var Content = mongoose.model('Contents', contentSchema);
 
 var pictureSchema = new Schema({
-    img: { data: String , contentType: String, title: String, desc: String }
+    data: String ,
+    contentType: String,
+    title: String,
+    desc: String
 });
 var Picture = mongoose.model('Pictures', pictureSchema);
 
 var videoSchema = new Schema({
-    vid: {data: String, contentType: String, name: String}
+    data: String,
+    contentType: String,
+    name: String
 });
 var Video = mongoose.model('Videos', videoSchema);
 
@@ -178,12 +183,12 @@ app.post('/postpicture', multipartMiddleware, function(req, res)
     var file = req.files.file;
     var pic = new Picture;
     var bitmap = fs.readFileSync(file.path);
-    pic.img.data = bitmap.toString('base64');
-    pic.img.contentType = file.type;
-    pic.img.title = req.body.title;
-    pic.img.desc = req.body.desc;
-    console.log(pic.img.data);
-    if(pic.img.contentType != "image/jpg" && pic.img.contentType != "image/jpeg")
+    pic.data = bitmap.toString('base64');
+    pic.contentType = file.type;
+    pic.title = req.body.title;
+    pic.desc = req.body.desc;
+    console.log(pic.data);
+    if(pic.contentType != "image/jpg" && pic.contentType != "image/jpeg")
     {
         res.json('no-support');
     }
@@ -200,6 +205,12 @@ app.post('/postpicture', multipartMiddleware, function(req, res)
 app.get('/getpictures', function(req, res){
     Picture.find(function(err, content) {
         //console.log(content);
+        res.json(content);
+    });
+});
+
+app.get('/getnodatapictures', function(req, res){
+    Picture.find({}, { _id: 1, desc: 1, title: 1 }, function(err, content){
         res.json(content);
     });
 });
@@ -224,8 +235,8 @@ app.post('/updatepicture', function(req, res){
             }
             else
             {
-                picture.img.title = req.body.img.title;
-                picture.img.desc = req.body.img.description;
+                picture.title = req.body.title;
+                picture.desc = req.body.description;
                 picture.save(function(err){
                     if(!err)
                     {
@@ -248,11 +259,11 @@ app.post('/postvideo', multipartMiddleware, function(req, res)
     var file = req.files.file;
     var video = new Video;
     var bitmap = fs.readFileSync(file.path);
-    video.vid.data = bitmap.toString('base64');
-    video.vid.contentType = file.type;
-    video.vid.name = req.body.name;
-    console.log(video.vid.data);
-    if(video.vid.contentType != "video/mp4")
+    video.data = bitmap.toString('base64');
+    video.contentType = file.type;
+    video.name = req.body.name;
+    console.log(video.data);
+    if(video.contentType != "video/mp4")
     {
         res.json('no-support');
     }
@@ -273,8 +284,8 @@ app.get('/getvideos', function(req, res){
 });
 
 app.get('/getnodatavideos', function(req, res){
-    Video.find({}, { _id: 1, vid.name: 1 }, function(err, res){
-
+    Video.find({}, { _id: 1, name: 1 }, function(err, content){
+        res.json(content);
     });
 });
 
@@ -298,7 +309,7 @@ app.post('/updatevideo', function(req, res){
             }
             else
             {
-                video.vid.name = req.body.name;
+                video.name = req.body.name;
                 video.save(function(err){
                     if(!err)
                     {

@@ -64,7 +64,7 @@ app.controller('VideosManageController', ['$scope', '$http', '$window', 'Upload'
         $scope.showUpdateVideo= function(video){
 
             $scope.videoUpdateObj.show = true;
-            $scope.videoUpdateObj.name = video.vid.name;
+            $scope.videoUpdateObj.name = video.name;
             $scope.videoUpdateObj.id=video._id;
         };
 
@@ -82,7 +82,7 @@ app.controller('VideosManageController', ['$scope', '$http', '$window', 'Upload'
 
         $scope.loadPanel = function(){
             $scope.startCircle();
-            $http.get('/getvideos')
+            $http.get('/getnodatavideos')
                 .success(function(res){
                     $scope.videoList = res;
                     console.log('Panel has successfuly loaded.');

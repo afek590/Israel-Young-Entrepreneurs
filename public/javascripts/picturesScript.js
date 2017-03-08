@@ -3,6 +3,7 @@ angular.module('Pictures', [])
         $scope.pictureList = [];
         $scope.displayPics = [];
         $scope.picAmount = 0;
+        $scope.skipFirst = false;
 
         $scope.loadPictures = function(){
             $http.get('/getpictures')
@@ -31,27 +32,29 @@ angular.module('Pictures', [])
         {
             //console.log("Picture list: ", $scope.pictureList);
             $scope.picAmount = $scope.pictureList.length;
+            if($scope.picAmount == 0)
+                return;
             for(var i=0; i<$scope.pictureList.length; i++)
             {
                 //console.log("This picture: ", $scope.pictureList[i]);
-                var base64 = $scope.pictureList[i].img.data;
+                var base64 = $scope.pictureList[i].data;
                 var binary = $scope.base64ToArrayBuffer(atob(base64));
-                var blob = new Blob([binary], {type: $scope.pictureList[i].img.contentType});
+                var blob = new Blob([binary], {type: $scope.pictureList[i].contentType});
                 var url = URL.createObjectURL(blob);
                 $scope.displayPics[i] = {};
                 /*$scope.displayPics[i] = function() {
                     URL.revokeObjectURL(url);
                 };*/
                 $scope.displayPics[i].src = url;
-                $scope.displayPics[i].title = $scope.pictureList[i].img.title;
-                $scope.displayPics[i].desc = $scope.pictureList[i].img.desc;
+                $scope.displayPics[i].title = $scope.pictureList[i].title;
+                $scope.displayPics[i].desc = $scope.pictureList[i].desc;
             }
             console.log($scope.displayPics);
         };
 
-        $scope.alertStuff = function(stuff)
+        $scope.getSubArray = function()
         {
-            alert(stuff);
+            return $scope.displayPics.slice(1, $scope.displayPics.length);
         };
 
         $scope.loadPictures();

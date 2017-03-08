@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.render('pictures', { title: 'יזמים צעירים ישראל - תמונות' });
+    res.render('pictures', { title: 'יזמים צעירים ישראל - תמונות'});
 });
 
 module.exports = router;

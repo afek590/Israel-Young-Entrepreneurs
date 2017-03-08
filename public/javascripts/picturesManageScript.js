@@ -16,9 +16,8 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
         $scope.delObject;
 
         $scope.picturesUpObj={ };
-        $scope.picturesUpObj.img = {};
-        $scope.picturesUpObj.img.title = "";
-        $scope.picturesUpObj.img.description = "";
+        $scope.picturesUpObj.title = "";
+        $scope.picturesUpObj.description = "";
         $scope.picturesUpObj.id = "0";
         $scope.picturesUpObj.show = false;
 
@@ -28,8 +27,8 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
         $scope.showUpdatePicture = function(pic){
 
             $scope.picturesUpObj.show = true;
-            $scope.picturesUpObj.img.title = pic.img.title;
-            $scope.picturesUpObj.img.description =pic.img.desc;
+            $scope.picturesUpObj.title = pic.title;
+            $scope.picturesUpObj.description =pic.desc;
             $scope.picturesUpObj.id = pic._id;
         };
 
@@ -114,7 +113,7 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
 
         $scope.loadPanel = function(){
             $scope.startCircle();
-            $http.get('/getpictures')
+            $http.get('/getnodatapictures')
                 .success(function(res){
                     $scope.pictureList = res;
                     console.log('Panel has successfuly loaded.');
@@ -127,13 +126,11 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
 
         $scope.startCircle = function(){
             document.getElementById("circle").classList.add("sk-circleSHOW1");
-            document.getElementById("picturesTable").style.borderColor = "red";
         };
 
         $scope.stopCircle = function(){
             document.getElementById("circle").classList.remove("sk-circleSHOW1");
             document.getElementById("circle").classList.add("sk-circleSHOW");
-            document.getElementById("picturesTable").style.borderColor = "green";
         };
 
         $scope.loadPanel();

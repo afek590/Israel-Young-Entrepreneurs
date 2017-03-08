@@ -114,7 +114,7 @@
             <div class="playlist">
                 <ul>
                     <li><a ng-click="controller.setVideo(0)">Default Video</a></li>
-                    <li ng-repeat="video in controller.videos"><a ng-click="controller.setVideo($index+1)">{{ videoList[$index].vid.name }}</a></li>
+                    <li ng-repeat="video in controller.videos"><a ng-click="controller.setVideo($index+1)">{{ videoList[$index].name }}</a></li>
                 </ul>
             </div>
 

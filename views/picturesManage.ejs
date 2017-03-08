@@ -101,7 +101,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="pic in pictureList">
-            <td>{{pic.img.title}}</td> <td>{{pic.img.desc}}</td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
+            <td>{{pic.title}}</td> <td>{{pic.desc}}</td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
         </tr>
         </tbody>
     </table>
@@ -115,11 +115,11 @@
             <tr>
 
                 <td> כותרת</td>
-                <td><input type="text" id="titleId" ng-model="picturesUpObj.img.title">  </td>
+                <td><input type="text" id="titleId" ng-model="picturesUpObj.title">  </td>
             </tr>
             <tr>
                 <td>תיאור</td>
-                <td><input type="text" name="description" id="descId" ng-model="picturesUpObj.img.description"></td>
+                <td><input type="text" name="description" id="descId" ng-model="picturesUpObj.description"></td>
             </tr>
         </table>
 
