@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="PicturesManage">
+<html ng-app="PicturesManage" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,11 +97,11 @@
     <br>
     <table id="picturesTable" class="table table-bordered" dir="rtl">
         <thead>
-        <tr><th>כותרת</th><th>תיאור</th> <th>עדכון</th> <th>מחיקה</th></tr>
+        <tr><th>כותרת</th><th>תיאור</th> <th>דף הבית</th> <th>עדכון</th> <th>מחיקה</th></tr>
         </thead>
         <tbody>
-        <tr ng-repeat="pic in pictureList">
-            <td>{{pic.title}}</td> <td>{{pic.desc}}</td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
+        <tr ng-repeat="pic in pictureList" ng-class="{'success': pic.show}">
+            <td>{{pic.title}}</td> <td>{{pic.desc}}</td> <td><input type="checkbox" ng-model="pic.show" ng-change="changeShow(pic)"></td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
         </tr>
         </tbody>
     </table>

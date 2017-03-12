@@ -71,8 +71,8 @@ var Admin = mongoose.model('Admins', adminSchema);
 
 var contentSchema = new Schema({
     title: String,
-    priority: Number,
-    description: String
+    description: String,
+    index: Number
 });
 var Content = mongoose.model('Contents', contentSchema);
 
@@ -80,7 +80,8 @@ var pictureSchema = new Schema({
     data: String ,
     contentType: String,
     title: String,
-    desc: String
+    desc: String,
+    show: Boolean
 });
 var Picture = mongoose.model('Pictures', pictureSchema);
 
@@ -134,8 +135,8 @@ app.post('/deladmin', function (req, res) {
 app.post('/postcontent', function(req, res){
     new Content({
         title: req.body.title,
-        priority: req.body.priority,
-        description: req.body.description
+        description: req.body.description,
+        index: null
     }).save(function(err){
         if(err)
             console.log(err)
@@ -151,27 +152,61 @@ app.get('/getcontent', function(req, res){
 });
 
 app.post('/updatecontent', function(req, res){
-    Content.remove({_id : req.body._id}, function(err){
-        console.log(err);
-    });
-    new Content({
-        title: req.body.title,
-        priority: req.body.priority,
-        description: req.body.description
-    }).save(function(err){
-        if(err)
-            console.log(err);
-        else
-            res.json('updated');
+    Content.findOne({ _id: req.body._id }, function(err, content){
+        if(!err)
+        {
+            console.log(content);
+            if(!content)
+            {
+                console.log('Content update error.1');
+            }
+            else
+            {
+                content.title = req.body.title;
+                content.desc = req.body.description;
+                content.save(function(err){
+                    if(!err)
+                    {
+                        console.log('Content updated');
+                        res.json('Content updated');
+                    }
+                    else
+                        console.log('Content update error.2');
+                });
+            }
+        }
     });
 });
 
 app.post('/delcontent', function(req, res){
     Content.remove({_id : req.body._id}, function(err){
         if(err)
-            console.log('ERRPR: ' + err);
+            console.log('ERROR: ' + err);
         else
             res.json('Content removed.');
+    });
+});
+
+app.post('/updateindex', function(req, res){
+    Content.findOne({_id: req.body._id}, function(err, content) {
+        if(!err)
+        {
+            if(!content)
+                console.log('Index update error.1');
+            else
+            {
+                content.index = req.body.index;
+                content.save(function(err){
+                    if(!err)
+                    {
+                        console.log('Index updated');
+                        res.json('Index updated');
+                    }
+                    else
+                        console.log('Index update error.2');
+                });
+            }
+        }
     });
 });
 
@@ -187,6 +222,7 @@ app.post('/postpicture', multipartMiddleware, function(req, res)
     pic.contentType = file.type;
     pic.title = req.body.title;
     pic.desc = req.body.desc;
+    pic.show = req.body.show;
     console.log(pic.data);
     if(pic.contentType != "image/jpg" && pic.contentType != "image/jpeg")
     {
@@ -210,7 +246,13 @@ app.get('/getpictures', function(req, res){
 });
 
 app.get('/getnodatapictures', function(req, res){
-    Picture.find({}, { _id: 1, desc: 1, title: 1 }, function(err, content){
+    Picture.find({}, { _id: 1, desc: 1, title: 1, show: 1 }, function(err, content){
+        res.json(content);
+    });
+});
+
+app.get('/getshowpictures', function(req, res){
+    Picture.find({show: true}, function(err, content){
         res.json(content);
     });
 });
@@ -245,6 +287,32 @@ app.post('/updatepicture', function(req, res){
                     }
                     else
                         console.log('Picture update error.2');
+                });
+            }
+        }
+    });
+});
+
+app.post('/updateshow', function(req, res){
+    Picture.findOne({ _id: req.body._id }, function(err, picture){
+        if(!err)
+        {
+            console.log(picture);
+            if(!picture)
+            {
+                console.log('Show update error.1');
+            }
+            else
+            {
+                picture.show = req.body.show;
+                picture.save(function(err){
+                    if(!err)
+                    {
+                        console.log('Show updated');
+                        res.json('Show updated');
+                    }
+                    else
+                        console.log('Show update error.2');
                 });
             }
         }

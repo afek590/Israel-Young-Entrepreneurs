@@ -22,10 +22,13 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="/javascripts/angular.min.js" type="text/javascript"></script>
     <script src="/javascripts/angular-animate.min.js"></script>
     <script src="/javascripts/angular-sanitize.min.js"></script>
     <script src="/javascripts/angular-route.min.js"></script>
+    <script src="/javascripts/sortable.js"></script>
 
     <script src="/javascripts/contentManageScript.js" type="text/javascript"></script>
 </head>
@@ -50,10 +53,6 @@
             <td><input type="text" name="title" id="titleId" ng-model="contentObj.title"> </td>
         </tr>
         <tr>
-            <td>עדיפות</td>
-            <td><input type="number" min="1" max="3" name="priority" id="priorityId" ng-model="contentObj.priority"> </td>
-        </tr>
-        <tr>
             <td>תוכן</td>
             <td><textarea type="text" id="txtDetails" ng-model="contentObj.description"></textarea> </td>
         </tr>
@@ -69,10 +68,14 @@
 
 
     <table class="table table-bordered" dir="rtl">
-        <tr><th>כותרת</th><th>עדיפות</th> <th>תוכן</th><th>עדכון</th> <th>מחיקה</th></tr>
-        <tr ng-repeat="content in contentList" ng-class="{'success': content.priority == 1 , 'warning': content.priority == 2 , 'danger': content.priority == 3 }">
-            <td>{{content.title}}</td> <td>{{content.priority}}</td><td>{{content.description}}</td>  <td>    <a href="#upContent"><button type="button" class="btn-xs btn-info" ng-click="showUpdateContent(content)">עדכן</button></a></td><td><button type="button" class="btn-xs btn-danger" id="delCourse" ng-click="delObj(content)">מחק</button></td>
+        <thead>
+        <tr><th>כותרת</th><th>תוכן</th><th>עדכון</th> <th>מחיקה</th></tr>
+        </thead>
+        <tbody ui-sortable="sortableOptions" ng-model="contentList">
+        <tr ng-repeat="content in contentList | orderBy : 'index'">
+            <td>{{content.title}}</td><td>{{content.description}}</td><td><a href="#upContent"><button type="button" class="btn-xs btn-info" ng-click="showUpdateContent(content)">עדכן</button></a></td><td><button type="button" class="btn-xs btn-danger" id="delCourse" ng-click="delObj(content)">מחק</button></td>
         </tr>
+        </tbody>
     </table>
 
 
@@ -97,6 +100,8 @@
         </table>
         <button type="button" class="btn-lg btn-success" ng-click="updateContent()" id="cmdUpd" >עדכן</button>
     </div>
+
+
 </div>
 </body>
 </html>

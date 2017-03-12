@@ -9,7 +9,6 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
         $scope.pictureObj = {};
         $scope.pictureObj.title = "";
         $scope.pictureObj.description = "";
-        $scope.pictureObj.show= false;
 
 
         $scope.pictureList;
@@ -58,7 +57,7 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
             {
                 $scope.f.upload = Upload.upload({
                     url: '/postpicture',
-                    data: {file: $scope.f, title: $scope.pictureObj.title, desc: $scope.pictureObj.description}
+                    data: {file: $scope.f, title: $scope.pictureObj.title, desc: $scope.pictureObj.description, show: false}
                 });
 
                 $scope.f.upload.then(function (response) {
@@ -131,6 +130,35 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
         $scope.stopCircle = function(){
             document.getElementById("circle").classList.remove("sk-circleSHOW1");
             document.getElementById("circle").classList.add("sk-circleSHOW");
+        };
+
+        $scope.changeShow = function(pic)
+        {
+            console.log(pic);
+
+            $http.post('/updateshow', pic)
+                .success(function(res) {
+                    console.log('Show updated.');
+                    $scope.loadPanel();
+
+                })
+                .catch(function(err) {
+                    console.log('Show  error updated.');
+                });
+            if(pic.show)
+                swal({
+                    title: "התמונה נוספה לדף הבית",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            else
+                swal({
+                    title: "התמונה הוסרה מדף הבית",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
         };
 
         $scope.loadPanel();

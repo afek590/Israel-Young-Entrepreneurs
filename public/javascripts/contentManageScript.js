@@ -1,4 +1,4 @@
-angular.module('ContentManage', []).controller('ContentManageController', ['$scope', '$http', '$window', function($scope, $http, $window)
+angular.module('ContentManage', ['ui.sortable']).controller('ContentManageController', ['$scope', '$http', '$window', function($scope, $http, $window)
 {
     $scope.access = JSON.parse(localStorage.getItem("Access"));
     console.log($scope.access);
@@ -7,18 +7,16 @@ angular.module('ContentManage', []).controller('ContentManageController', ['$sco
 
     $scope.contentObj = {};
     $scope.contentObj.title = "";
-    $scope.contentObj.priority = 1;
     $scope.contentObj.description = "";
     $scope.contentObj.show =false;
     
-    $scope.contentList;
+    $scope.contentList = [];
     $scope.delObject;
 
     $scope.updObj={};
     $scope.updObj.title = "";
-    $scope.updObj.priority = 1;
     $scope.updObj.description = "";
-    $scope.updObj.id = "0";
+    $scope.updObj._id = "0";
 
     $scope.updObj.show = false;
 
@@ -26,7 +24,6 @@ angular.module('ContentManage', []).controller('ContentManageController', ['$sco
 
         $scope.updObj.show = true;
         $scope.updObj.title = content.title;
-        $scope.updObj.priority = content.priority;
         $scope.updObj.description =content.description;
         $scope.updObj._id=content._id;
         console.log($scope.updObj);
@@ -52,7 +49,6 @@ angular.module('ContentManage', []).controller('ContentManageController', ['$sco
         $http.post('/postcontent', $scope.contentObj)
             .success(function(res) {
                 $scope.contentObj.title = "";
-                $scope.contentObj.priority = 1;
                 $scope.contentObj.description = "";
                 console.log('content added successfully.');
                 $scope.loadPanel();
@@ -83,6 +79,21 @@ angular.module('ContentManage', []).controller('ContentManageController', ['$sco
             .catch(function(err) {
                 console.log('Get contents error.');
             });
+    };
+
+    $scope.sortableOptions = {
+        stop: function(e, ui) {
+            $scope.contentList.map(function(element, index){
+                element.index = index;
+                $http.post('/updateindex', element)
+                    .success(function(res) {
+                        console.log('Index updated.');
+                    })
+                    .catch(function(err) {
+                        console.log('Indexes update error.');
+                    });
+            });
+        }
     };
 
     $scope.loadPanel();
