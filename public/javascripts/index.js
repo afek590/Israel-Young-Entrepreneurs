@@ -1,10 +1,13 @@
 var MANAGERS = [];
 var LOGIN = false;
 
-var app = angular.module('Index', []).controller('IndexController', ['$scope', '$http', '$interval', function($scope, $http, $interval){
+var app = angular.module('Index', ['ngSanitize']).controller('IndexController', ['$scope', '$http', '$interval', function($scope, $http, $interval){
     $scope.pictureList = [];
     $scope.displayPics = [];
     $scope.contentList = [];
+    $scope.access = false;
+    $scope.showAddress = false;
+    $scope.adderess = "";
 
     $scope.loadPanel = function(){
         $http.get('/admins')
@@ -16,6 +19,16 @@ var app = angular.module('Index', []).controller('IndexController', ['$scope', '
             })
             .catch(function(err) {
                 console.log('Get admins error.');
+            });
+
+        $http.get('/getaddressonmain')
+            .success(function(res){
+                $scope.showAddress = res.addressOnMain;
+                $scope.address = res.address;
+                $scope.title = res.title;
+            })
+            .catch(function(err) {
+                console.log('Get settings error.');
             });
 
         $http.get('/getshowpictures')
@@ -76,12 +89,10 @@ var app = angular.module('Index', []).controller('IndexController', ['$scope', '
         return $scope.displayPics.slice(1, $scope.displayPics.length);
     };
 
-    $scope.access = false;
-
     $interval(function(){
         $scope.access = LOGIN;
         localStorage.setItem("Access", $scope.access);
-    }, 1000);
+    }, 500);
 
     $scope.loadPanel();
 }]);

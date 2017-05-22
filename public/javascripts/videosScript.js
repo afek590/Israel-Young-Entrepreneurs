@@ -13,6 +13,7 @@ app.controller('VideoController', ['$scope', '$http', '$sce', '$timeout', functi
     controller.state = null;
     controller.API = null;
     controller.currentVideo = 0;
+    $scope.currentIndex = 0;
 
     controller.onPlayerReady = function(API) {
         controller.API = API;
@@ -55,6 +56,7 @@ app.controller('VideoController', ['$scope', '$http', '$sce', '$timeout', functi
     controller.setVideo = function(index) {
         controller.API.stop();
         controller.currentVideo = index;
+        $scope.currentIndex = index;
         controller.config.sources = controller.videos[index].sources;
         $timeout(controller.API.play.bind(controller.API), 100);
     };

@@ -9,6 +9,8 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var mongoose = require('mongoose');
 
+
+
 // Require the routes
 var index = require('./routes/index');
 var adminsManageRoute = require('./routes/adminsManage');
@@ -20,6 +22,8 @@ var forumRoute = require('./routes/forum');
 var videosRoute = require('./routes/videos');
 var picturesRoute = require('./routes/pictures');
 var contentRoute = require('./routes/content');
+var settingsRoute = require('./routes/settingsManage');
+var contactRoute = require('./routes/contact');
 
 var Schema = mongoose.Schema;
 mongoose.connect('mongodb://iye:iye123@ds052819.mlab.com:52819/iye');
@@ -56,6 +60,8 @@ app.use('/forum', forumRoute);
 app.use('/pictures', picturesRoute);
 app.use('/content', contentRoute);
 app.use('/videos', videosRoute);
+app.use('/settingsManage', settingsRoute);
+app.use('/contact', contactRoute);
 
 // < -------------------------- End of routes -------------------------->
 
@@ -91,6 +97,15 @@ var videoSchema = new Schema({
     name: String
 });
 var Video = mongoose.model('Videos', videoSchema);
+
+var settingsSchema = new Schema({
+    title: String,
+    address: String,
+    phone: String,
+    mail: String,
+    addressOnMain: Boolean
+});
+var Setting = mongoose.model('Settings', settingsSchema);
 
 // < -------------------------- End of database's schemas -------------------------->
 
@@ -163,7 +178,7 @@ app.post('/updatecontent', function(req, res){
             else
             {
                 content.title = req.body.title;
-                content.desc = req.body.description;
+                content.description = req.body.description;
                 content.save(function(err){
                     if(!err)
                     {
@@ -260,7 +275,7 @@ app.get('/getshowpictures', function(req, res){
 app.post('/delpicture', function(req, res){
     Picture.remove({_id : req.body._id}, function(err){
         if(err)
-            console.log('ERRPR: ' + err);
+            console.log('ERROR: ' + err);
         else
             res.json('Picture removed.');
     });
@@ -388,6 +403,58 @@ app.post('/updatevideo', function(req, res){
                         console.log('Video update error.2');
                 });
             }
+        }
+    });
+});
+
+
+// *** Settings' function ***
+
+app.get('/getsettings', function(req, res){
+    Setting.findOne(function(err, content) {
+        res.json(content);
+    });
+});
+
+app.get('/getaddressonmain', function(req, res){
+    Setting.findOne({}, {title: 1, address: 1, addressOnMain: 1 }, function(err, content){
+        res.json(content);
+    });
+});
+
+app.post('/updatesettings', function(req, res){
+    Setting.findOne(function(err, result) {
+        if(!result)
+        {
+            new Setting({
+                title: req.body.title,
+                address: req.body.address,
+                phone: req.body.phone,
+                mail: req.body.mail,
+                addressOnMain: req.body.addressOnMain
+            }).save(function(err){
+                if(err)
+                    console.log(err);
+                else
+                    res.json('saved');
+            });
+        }
+        else
+        {
+            result.title = req.body.title;
+            result.address = req.body.address;
+            result.phone = req.body.phone;
+            result.mail = req.body.mail;
+            result.addressOnMain = req.body.addressOnMain;
+            result.save(function(err){
+                if(!err)
+                {
+                    console.log('Settings updated');
+                    res.json('Settings updated');
+                }
+                else
+                    console.log('Settings update error.');
+            });
         }
     });
 });

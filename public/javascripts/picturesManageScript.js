@@ -134,8 +134,6 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
 
         $scope.changeShow = function(pic)
         {
-            console.log(pic);
-
             $http.post('/updateshow', pic)
                 .success(function(res) {
                     console.log('Show updated.');

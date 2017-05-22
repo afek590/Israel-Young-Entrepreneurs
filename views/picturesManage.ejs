@@ -13,7 +13,7 @@
     <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/openSans/fontstyle.css">
     <link href="stylesheets/waitCircle.css" rel="stylesheet">
 
     <!-- Sweet Alert -->
@@ -39,29 +39,29 @@
 
 <body  ng-controller="PicturesManageController as picturesManage" dir="rtl">
 
-<div class="container">
+<div class="container" style="background-color: #FFF8DC">
 
-    <a href="panelManagement" ><button type="button" class="btn btn-default center-block">חזרה לממשק הניהול</button></a>
+    <a href="panelManagement" ><button type="button" class="btn btn-primary center-block">חזרה לממשק הניהול</button></a>
 
 
     <h1 class="text-center">תמונות</h1>
     <br><hr>
-    הוספת תמונה חדשה
+   <h3> הוספת תמונה חדשה</h3>
     <br>
 
     <table class="table table-bordered" dir="rtl">
         <tr>
-            <td>כותרת</td>
+            <td class="text-center"><b>כותרת</b></td>
             <td><input type="text" name="title" id="titleId" ng-model="pictureObj.title"></td>
         </tr>
         <tr>
-            <td>תיאור</td>
+            <td class="text-center"><b>תיאור</b></td>
             <td><input type="text" name="description" id="descId" ng-model="pictureObj.description"></td>
         </tr>
         <tr>
-            <td> קישור</td>
+            <td class="text-center"><b>קישור</b></td>
             <td>
-                <button type="file" ngf-select="addPicture($file, $invalidFiles)" accept="image/*" ngf-max-size="10MB">Select File</button>
+                <button class="btn-default" type="file" ngf-select="addPicture($file, $invalidFiles)" accept="image/*" ngf-max-size="10MB">Select File</button>
             </td>
         </tr>
     </table>
@@ -77,7 +77,8 @@
     <button type="button" class="btn-lg btn-success"  ng-click="sendPicture()"  id="cmdAdd" >הוספה</button>
 
     <hr>
-תמונות קיימות
+    <br>
+<h3>תמונות קיימות</h3>
 
     <!--wait circle-->
     <div id="circle" class="sk-circle sk-circleSHOW">
@@ -97,11 +98,11 @@
     <br>
     <table id="picturesTable" class="table table-bordered" dir="rtl">
         <thead>
-        <tr><th>כותרת</th><th>תיאור</th> <th>דף הבית</th> <th>עדכון</th> <th>מחיקה</th></tr>
+        <tr><th class="text-center">כותרת</th><th class="text-center">תיאור</th> <th class="text-center">דף הבית</th> <th class="text-center">עדכון</th> <th class="text-center">מחיקה</th></tr>
         </thead>
         <tbody>
         <tr ng-repeat="pic in pictureList" ng-class="{'success': pic.show}">
-            <td>{{pic.title}}</td> <td>{{pic.desc}}</td> <td><input type="checkbox" ng-model="pic.show" ng-change="changeShow(pic)"></td> <td><a href="#updNews"><button type="button" class="btn-xs btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td>    <button type="button" class="btn-xs btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
+            <td class="text-center">{{pic.title}}</td> <td class="text-center">{{pic.desc}}</td> <td class="text-center"><input type="checkbox" ng-model="pic.show" ng-change="changeShow(pic)"></td> <td class="text-center"><a href="#updNews"><button type="button" class="btn-md btn-info" ng-click="showUpdatePicture(pic)">עדכן</button></a></td><td class="text-center">    <button type="button" class="btn-md btn-danger" id="delNl" ng-click="delObj(pic)">מחק</button> </td>
         </tr>
         </tbody>
     </table>
@@ -114,16 +115,16 @@
 
             <tr>
 
-                <td> כותרת</td>
+                <td class="text-center"><b>כותרת</b></td>
                 <td><input type="text" id="titleId" ng-model="picturesUpObj.title">  </td>
             </tr>
             <tr>
-                <td>תיאור</td>
+                <td class="text-center"><b>תיאור</b></td>
                 <td><input type="text" name="description" id="descId" ng-model="picturesUpObj.description"></td>
             </tr>
         </table>
 
-        <button type="button" class="btn-lg btn-success" ng-click="updatePicture()" id="cmdUpd" >        עדכן</button>
+            <button type="button" class="btn-lg btn-success" ng-click="updatePicture()" id="cmdUpd" >        עדכן</button>
     </div>
 </div>
 </body>

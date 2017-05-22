@@ -14,7 +14,7 @@
     <link href="\stylesheets\bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="stylesheets/2-col-portfolio.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/openSans/fontstyle.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,10 +31,10 @@
     <script src="/javascripts/adminsManageScript.js" type="text/javascript"></script>
 </head>
 
-<body ng-controller="AdminsManageController as adminsManage">
+<body ng-controller="AdminsManageController as adminsManage" dir="rtl">
 
-<div class="container">
-    <a href="panelManagement" ><button type="button" class="btn-default center-block">חזרה לממשק הניהול</button></a>
+<div class="container" style="background-color: #FFF8DC">
+    <a href="panelManagement"><button type="button" class="btn btn-primary center-block">חזרה לממשק הניהול</button></a>
     <h1 class="text-center">אדמינים</h1>
     <br>
     <hr>
@@ -43,17 +43,14 @@
     <br>
 
 
-    <table class="table" dir="rtl">
+    <table class="table table-bordered" dir="rtl">
         <tr>
 
-            <td> שם </td>
+            <td class="text-center"><b>שם</b></td>
             <td><input type="text" id="txtName" ng-model="adminObj.name" required>  </td>
         </tr>
-
         <tr>
-
-            <td> מייל</td>
-
+            <td class="text-center"><b>מייל</b></td>
             <td>     <input type="email" id="txtEmail" ng-model="adminObj.email" required> </td>
         </tr>
     </table>
@@ -65,17 +62,17 @@
 
     <hr>
 
+    <h3>אדמינים קיימים</h3>
 
     <table class="table table-bordered" dir="rtl">
         <thead>
-        <tr><th>שם</th><th>מייל</th><th>מחיקה</th></tr>
+        <tr><th class="text-center">שם</th><th class="text-center">מייל</th><th class="text-center">מחיקה</th></tr>
         </thead>
         <tbody>
         <tr ng-repeat="admin in adminsList">
-            <td>{{admin.name}}</td> <td>{{admin.email}}</td> <td> <button type="button" class="btn-md btn-danger" ng-click="delAdmin(admin)">מחק</button></td>
-        </tbody>
-
+            <td class="text-center">{{admin.name}}</td> <td class="text-center">{{admin.email}}</td> <td class="text-center"> <button type="button" class="btn-md btn-danger" ng-click="delAdmin(admin)">מחק</button></td>
         </tr>
+        </tbody>
     </table>
 
 

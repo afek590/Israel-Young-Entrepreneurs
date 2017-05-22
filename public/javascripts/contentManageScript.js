@@ -1,4 +1,4 @@
-angular.module('ContentManage', ['ui.sortable']).controller('ContentManageController', ['$scope', '$http', '$window', function($scope, $http, $window)
+angular.module('ContentManage', ['ui.sortable', 'ngSanitize']).controller('ContentManageController', ['$scope', '$http', '$window', function($scope, $http, $window)
 {
     $scope.access = JSON.parse(localStorage.getItem("Access"));
     console.log($scope.access);
@@ -20,17 +20,22 @@ angular.module('ContentManage', ['ui.sortable']).controller('ContentManageContro
 
     $scope.updObj.show = false;
 
+    CKEDITOR.replace("txtDetails");
+    CKEDITOR.replace("updateDetails");
+
     $scope.showUpdateContent = function(content){
 
         $scope.updObj.show = true;
         $scope.updObj.title = content.title;
         $scope.updObj.description =content.description;
+        CKEDITOR.instances.updateDetails.setData($scope.updObj.description);
         $scope.updObj._id=content._id;
         console.log($scope.updObj);
     };
 
     $scope.updateContent = function(){
         $scope.updObj.show = false;
+        $scope.updObj.description = CKEDITOR.instances.updateDetails.getData();
         $http.post('/updatecontent', $scope.updObj)
             .success(function(res) {
                 console.log('content updated.');
@@ -46,10 +51,12 @@ angular.module('ContentManage', ['ui.sortable']).controller('ContentManageContro
 
 
     $scope.addContent = function(){
+        $scope.contentObj.description = CKEDITOR.instances.txtDetails.getData();
         $http.post('/postcontent', $scope.contentObj)
             .success(function(res) {
                 $scope.contentObj.title = "";
                 $scope.contentObj.description = "";
+                CKEDITOR.instances.txtDetails.setData("");
                 console.log('content added successfully.');
                 $scope.loadPanel();
             })
