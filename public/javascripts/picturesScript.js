@@ -48,6 +48,7 @@ angular.module('Pictures', [])
                 $scope.displayPics[i].src = url;
                 $scope.displayPics[i].title = $scope.pictureList[i].title;
                 $scope.displayPics[i].desc = $scope.pictureList[i].desc;
+                console.log($scope.displayPics[i]);
             }
             console.log($scope.displayPics);
         };

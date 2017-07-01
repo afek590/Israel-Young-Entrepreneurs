@@ -47,6 +47,12 @@ app.controller('SettingsController', ['$scope', '$http', '$window', function($sc
     {
         $http.post('/updatesettings', $scope.settings)
             .success(function(res) {
+                swal({
+                    title: "הגדרות האתר עודכנו",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 console.log('Settings updated.');
                 $scope.loadPanel();
             })

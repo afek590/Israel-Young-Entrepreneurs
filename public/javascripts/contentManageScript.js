@@ -36,6 +36,12 @@ angular.module('ContentManage', ['ui.sortable', 'ngSanitize']).controller('Conte
     $scope.updateContent = function(){
         $scope.updObj.show = false;
         $scope.updObj.description = CKEDITOR.instances.updateDetails.getData();
+        swal({
+            title: "התוכן עודכן",
+            type: "success",
+            showConfirmButton: false,
+            timer: 2000
+        });
         $http.post('/updatecontent', $scope.updObj)
             .success(function(res) {
                 console.log('content updated.');
@@ -52,6 +58,14 @@ angular.module('ContentManage', ['ui.sortable', 'ngSanitize']).controller('Conte
 
     $scope.addContent = function(){
         $scope.contentObj.description = CKEDITOR.instances.txtDetails.getData();
+        if($scope.contentObj.title === "" && $scope.contentObj.description === "")
+        {
+            swal({
+                title: 'לא ניתן להוסיף תוכן ריק',
+                type: 'error'
+            });
+            return;
+        }
         $http.post('/postcontent', $scope.contentObj)
             .success(function(res) {
                 $scope.contentObj.title = "";
@@ -67,13 +81,30 @@ angular.module('ContentManage', ['ui.sortable', 'ngSanitize']).controller('Conte
     };
 
     $scope.delObj = function(content){
-        $http.post('/delcontent', content)
-            .success(function(res) {
-                console.log('content remove.');
-                $scope.loadPanel();
-            })
-            .catch(function(err) {
-                console.log('content remove error.');
+        swal({
+                title: "האם את/ה בטוח?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "מחק",
+                cancelButtonText: "ביטול",
+                closeOnConfirm: false
+            },
+            function(){
+                $http.post('/delcontent', content)
+                    .success(function(res) {
+                        console.log('content remove.');
+                        swal({
+                            title: "התוכן נמחק",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        $scope.loadPanel();
+                    })
+                    .catch(function(err) {
+                        console.log('content remove error.');
+                    });
             });
     };
 

@@ -73,6 +73,12 @@ app.controller('VideosManageController', ['$scope', '$http', '$window', 'Upload'
             $http.post('/updatevideo', $scope.videoUpdateObj)
                 .success(function(res) {
                     console.log('Video updated.');
+                    swal({
+                        title: "הוידאו עודכן",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                     $scope.loadPanel();
                 })
                 .catch(function(err) {

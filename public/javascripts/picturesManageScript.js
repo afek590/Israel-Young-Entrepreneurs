@@ -38,6 +38,12 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
             $http.post('/updatepicture', $scope.picturesUpObj)
                 .success(function(res) {
                     console.log('Picture updated.');
+                    swal({
+                        title: "התמונה עודכנה",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                     $scope.loadPanel();
 
                 })
