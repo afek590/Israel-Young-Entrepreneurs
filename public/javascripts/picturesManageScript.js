@@ -71,7 +71,11 @@ app.controller('PicturesManageController', ['$scope', '$http', '$window', 'Uploa
                         $scope.f.result = response.data;
                         console.log(response);
                         if(response.data == 'no-support')
-                            alert('File not supported.');
+                            swal({
+                                title: "העלאה נכשלה",
+                                text: "הקובץ איננו נתמך",
+                                type: "error"
+                            });
                         $scope.pictureObj.title = "";
                         $scope.pictureObj.description = "";
                         $scope.showProgress = false;

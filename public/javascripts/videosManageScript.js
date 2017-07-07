@@ -43,7 +43,7 @@ app.controller('VideosManageController', ['$scope', '$http', '$window', 'Upload'
                         if(response.data == 'no-support')
                             swal({
                                 title: "העלאה נכשלה",
-                                text: "העלאת הסרטון לשרת נכשלה, אנא נסה שנית מאוחר יותר",
+                                text: "הקובץ איננו נתמך",
                                 type: "error"
                             });
                         $scope.videoObj.name = "";
