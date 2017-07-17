@@ -4,4 +4,6 @@
 
 ## [Project's Video](https://youtu.be/LXz3cB7HWFc)
 
-## [Project's Poster]()
+## [Project's Poster](https://github.com/afek590/Israel-Young-Entrepreneurs/blob/master/Documents/poster.pdf)
+
+## [Transfer Report](https://github.com/afek590/Israel-Young-Entrepreneurs/blob/master/Documents/Project%20phases/Transfer.docx)
